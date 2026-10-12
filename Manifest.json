@@ -1,0 +1,16 @@
+{
+    "name": "Self Track Attendance",
+    "short_name": "Self_Track",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "self_attendance_logo_icon.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
+}

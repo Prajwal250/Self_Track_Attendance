@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+    <head>
+        <meta charset = 'UTF-8'>
+        <meta name = 'viewport' content = 'width = 1536, height = 730, initial-scale = 1.0'>
+        <title>Self Attendance</title>
+        <link rel = 'stylesheet' href = 'Self_Attendance_Design.css'>
+        <link rel = 'icon' type = 'image/png' href = 'Self_Attendance_Logo_Icon.png'>
+        <link rel = 'manifest' href = 'Manifest.json'>
+    </head>
+    <body>
+        <nav>
+            <h2 id = 'theme'></h2>
+            <label for = 'myCheckbox' class = 'common-period-name'>Assign a name to multiple periods (Enable checkbox, Type a Subject Name, then click a period):</label>
+            <input type = 'checkbox' id = 'myCheckbox' class = 'common-period-name'>
+            <input type = 'text' id = 'cpn' class = 'common-period-name' disabled = 'true'>
+            <fieldset id = 'status'>
+                <legend>Set Status for Multiple Periods:</legend>
+                <label><input type = 'radio' name = 'status' value = '' checked> None</label><br>
+                <label><input type = 'radio' name = 'status' value = 'Present'> Present</label><br>
+                <label><input type = 'radio' name = 'status' value = 'Absent'> Absent</label><br>
+                <label><input type = 'radio' name = 'status' value = 'no-class'> Class Cancelled</label><br>
+                <label><input type = 'radio' name = 'status' value = 'remove'> Remove Current Status</label>
+            </fieldset>
+            <button class = 'sign-out-btn'>Sign Out</button>
+        </nav>
+        <div id = 'first-time-sign-in'>
+            <h1>❌ You are not signed in to our Self Attendance Marking Website. Please press the <strong>'Sign in'</strong> button below to sign in to our website and start marking and saving your own attendance.</h1>
+            <button id = 'loginBtn'>Sign in with Google</button>
+        </div>
+        <div id = 'first-time'>
+            <h2><span id = 'temp0'></span><span id = 'temp'></span>! <br>Please select a JSON file where you might have stored your attendance data</h2><br>
+            <input type = 'file' class = 'file_inputs'><br><br>
+            <h2>If you are saving attendance data for the first time, press the Add New Week button to start adding weeks!</h2>
+            <h3>Or if you have other themes where your attendance data is saved you many select from the dropdown!</h3>
+            <h3>You may also sign out and login with a different account where your attendance data might be stored!</h3>
+            <button class = 'sign-out-btn'>Sign Out</button>
+        </div>
+        <table id = 'table-container'></table>
+        <div id = 'most_important'>
+            <button id = 'add-week-btn'>Add New Week</button>
+            <div id = 'first-time-date'>
+                <h2>Please select a start date for your Attendance timetable:</h2><br>
+                <h4 style = 'color: rgb(250, 0, 0); font-weight: bolder;'>⚠ You can store a maximum of <strong id = 'max-time-html'></strong> of Attendance data under this theme. <br>⚠ Once you declare the start date, <strong>it cannot be changed</strong> later!</h4>
+                <input type = 'date' id = 'start-date'>
+                <button id = 'submit-date'>Submit</button>
+                <button id = 'cancel-date'>Cancel</button>
+            </div>
+            <label for = 'period_select'>Number of Periods:</label>
+            <select id = 'period_select' name = 'period_select'>
+                <option value = '1'>1</option><option value = '2'>2</option><option value = '3'>3</option><option value = '4'>4</option><option value = '5'>5</option><option value = '6'>6</option><option value = '7'>7</option>
+                <option value = '8' selected = 'selected'>8</option>
+                <option value = '9'>9</option><option value = '10'>10</option><option value = '11'>11</option><option value = '12'>12</option><option value = '13'>13</option><option value = '14'>14</option><option value = '15'>15</option><option value = '16'>16</option>
+                <option value = '17'>17</option><option value = '18'>18</option><option value = '19'>19</option><option value = '20'>20</option><option value = '21'>21</option><option value = '22'>22</option><option value = '23'>23</option><option value = '24'>24</option>
+            </select>
+            <span id = 'start_end_date'><span id = 'start-date-label'>Start Date :</span> <span id = 'start-date-value'></span>, <span id = 'end-date-label'>End Date :</span> <span id = 'end-date-value'></span></span>
+            <button id = 'toggle_notes'>Show Current Theme Notes</button><br><br>
+            <section id = 'theme-notes-section'>
+                <span><input type = 'date' id = 'add-date-notes' /><button id = 'gen-date-notes'>Generate Selected Date's Timed Period Notes</button><button id = 'input-date-notes'>Add Multiple Date's Notes</button><button id = 'scroll-date-notes'>Scroll to Selected Date's Notes</button></span>
+                <h3 id = 'theme-notes-heading'></h3>
+                <textarea id = 'show_notes_date' readonly></textarea>
+                <textarea id = 'theme-notes' placeholder = 'Type your notes here...'></textarea>
+            </section>
+            <button id = 'show-latest-btn' class = 'week-btn-beside'>Show Latest Timetable</button>
+            <button id = 'copy-latest-btn' class = 'week-btn-beside'>Copy Latest Timetable</button>
+            <button id = 'paste-latest-btn' class = 'week-btn-beside'>Paste Dictionary to Update Latest Timetable</button>
+            <button id = 'reset-latest-btn' class = 'week-btn-beside'>Reset Latest Timetable</button>
+            <div id = 'latest-timetable'>
+                <h3 id = 'latest-timetable-heading'></h3>
+                <table id = 'latest-timetable-main'>
+                    <thead><tr><th>Day</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead>
+                    <tbody>
+                        <tr><th>Sunday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Monday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Tuesday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Wednesday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Thursday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Friday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                        <tr><th>Saturday</th><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td><td contenteditable = 'true'></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id = 'themes-section'>
+                <select id = 'themeDropdown'><option value = ''>Select a Theme to Switch to ....</option></select>
+                <button class = 'themeclass' id = 'add-new-theme-btn'>Add New Theme...</button>
+                <button class = 'themeclass' id = 'rename-theme-btn'>Rename Current Theme...</button>
+                <button class = 'themeclass' id = 'delete-theme-btn'>Delete Theme...</button>
+            </div>
+        </div>
+        <div id = 'lets-do-it'>
+            <button id = 'save-data-btn'>Save Data</button>
+            <button id = 'popup-btn'>Show and Restore Deleted Dates</button>
+            <button id = 'period-time-toggle'>Open Timings Form</button>
+            <div id = 'period-time'></div><br>
+            <button id = 'attendance-btn'>Display Attendance</button>
+            <button id = 'download-btn'>Download Attendance Data</button>
+            <input type = 'file' class = 'file_inputs'><br><br>
+            <div id = 'attendance-display-section'></div>
+            <div id = 'period-container'></div>
+        </div>
+        <div id = 'userStatusArea'>
+            <h1 id = 'user-heading'>About the User :</h1>
+            <img id = 'userPhoto' alt = 'User Photo' width = '100' height = '100' />
+            <div id = 'userInfo'>
+                <h2><strong>Username :</strong> <span id = 'userName'></span></h2>
+                <h2><strong>Email :</strong> <span id = 'userEmail'></span></h2>
+                <h2><strong>User firebase account created at :</strong> <span id = 'accountcreationtime'></span></h2>
+            </div>
+            <h3 id = 'usersignstatus'><span id = 'signin-message'></span> <span id = 'last-signin-part'>Last Sign In on <span id = 'last-signin-time'></span>.</span></h3>
+            <h3 id = 'main_theme_creation_time'><span id = 'theme-created-part'>Theme "<span id = 'created-theme-name'></span>" created on <span id = 'created-time'></span>.</span><span id = 'last-saved-part'><br>Last data saved under this theme on <span id = 'last-saved-time'></span>.</span></h3>
+        </div>
+        <footer>
+            <h2>About the Creator</h2>
+            <a href = 'https://www.linkedin.com/in/prajwal250/' target = '_blank'><img src = '/User_Contact_Form/Creator_Photo.jpg' alt = 'Prajwal Das' /></a>
+            <p><span class = 'f-copy'>©</span> <span class = 'f-date'>1st Sep 2025</span>, released under <a href = 'https://github.com/prajwal250/Self_Track_Attendance/blob/main/LICENSE' target = '_blank'>MIT License</a>.</p>
+            <p>Created by <strong class = 'f-name'>Prajwal Das</strong> for <strong class = 'f-mini'>Mini Project</strong> in <strong class = 'f-year'>3rd year (pre-final year)</strong> of <strong class = 'f-course'>B.Tech CSE</strong> at <a href = 'https://www.ipec.org.in/' target = '_blank'>IPEC, Ghaziabad</a>, affiliated with <a href = 'https://aktu.ac.in/' target = '_blank'>AKTU, Lucknow</a>.</p>
+            <p>It lets you mark and save your own attendance with sign-in, themes, weekly timetables, period timings, notes, and attendance statistics for each subject.</p>
+            <p>Official Site : <a href = '/Self_Track_Attendance/' target = '_blank'>https://prajwal250.github.io/Self_Track_Attendance/</a>.</p>
+            <p>Found a bug in the website, or have a suggestion? Please let me know through the <a href = '/User_Contact_Form/' target = '_blank'>Contact Form</a>.</p>
+        </footer>
+    </body>
+    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('./Service_Worker.js');</script>
+    <script src = 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js' defer></script>
+    <script src = 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js' defer></script>
+    <script src = 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js' defer></script>
+    <script src = 'Self_Attendance_Working.js' defer></script>
+    <noscript><style> body { display: block; } #userStatusArea, footer { display: none; } </style><h1>JavaScript is disabled! Please enable Javascript as it is neccesary for the working and proper functioning of this website.</h1></noscript>
+</html>
